@@ -1,5 +1,6 @@
 package com.example.ciudadActiva.Controller;
 
+import com.example.ciudadActiva.DTO.AsignacionDTO;
 import com.example.ciudadActiva.DTO.ReporteDTO;
 import com.example.ciudadActiva.Entity.Reporte;
 import com.example.ciudadActiva.Service.ReporteService;
@@ -49,6 +50,14 @@ public class ReporteController {
     public ResponseEntity<Reporte> cerrarReporte(@PathVariable Long id) {
         Reporte reporteCerrado = reporteService.cerrarReporte(id);
         return ResponseEntity.ok(reporteCerrado);
+    }
+
+    @PostMapping("/{id}/asignaciones")
+    public ResponseEntity<Reporte> asignarResponsable(
+            @PathVariable Long id,
+            @RequestBody AsignacionDTO asignacionDTO) {
+        Reporte reporteAsignado = reporteService.asignarResponsable(id, asignacionDTO);
+        return ResponseEntity.ok(reporteAsignado);
     }
 
     @PutMapping("/{id}")
