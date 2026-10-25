@@ -46,6 +46,10 @@ public class Reporte {
     @JoinColumn(name = "ciudadano_id", nullable = false)
     private Usuario ciudadano;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "operador_id")
+    private Usuario operador;
+
     @PrePersist
     protected void  onCreate(){
         this.fechaCreacion = LocalDateTime.now();
@@ -53,4 +57,5 @@ public class Reporte {
             this.estado = "PENDIENTE";
         }
     }
+
 }

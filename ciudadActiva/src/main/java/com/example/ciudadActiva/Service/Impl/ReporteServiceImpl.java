@@ -1,5 +1,6 @@
 package com.example.ciudadActiva.Service.Impl;
 
+import com.example.ciudadActiva.DTO.AsignacionDTO;
 import com.example.ciudadActiva.DTO.ReporteDTO;
 import com.example.ciudadActiva.Entity.CategoriaIncidencia;
 import com.example.ciudadActiva.Entity.Reporte;
@@ -94,6 +95,17 @@ public class ReporteServiceImpl implements ReporteService {
         if (reporteDetalles.getCiudadano() != null) {
             reporteExistente.setCiudadano(reporteDetalles.getCiudadano());
         }
+
+        return reporteRepository.save(reporteExistente);
+    }
+
+    @Override
+    public Reporte asignarResponsable(Long id, AsignacionDTO asignacionDTO) {
+        Reporte reporteExistente = reporteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado con ID: " + id));
+        Usuario operador = usuarioRepository.findById(asignacionDTO.getOperadorId())
+                .orElseThrow(() -> new RuntimeException("Operador no encontrado con ID: " + asignacionDTO.getOperadorId()));
+        reporteExistente.setOperador(operador);
 
         return reporteRepository.save(reporteExistente);
     }
